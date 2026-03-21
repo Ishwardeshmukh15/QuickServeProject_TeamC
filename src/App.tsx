@@ -14,6 +14,7 @@ import AdminUsers from './components/admin/AdminUsers';
 import AdminServices from './components/admin/AdminServices';
 import AdminBookings from './components/admin/AdminBookings';
 import AdminSettings from './components/admin/AdminSettings';
+import LandingPage from './components/home/LandingPage';
 import { supabase } from './lib/supabaseClient';
 import { Session } from '@supabase/supabase-js';
 
@@ -22,6 +23,7 @@ function App() {
     const [authType, setAuthType] = useState<'customer' | 'provider' | 'admin'>('customer');
     const [session, setSession] = useState<Session | null>(null);
     const [loading, setLoading] = useState(true);
+    const [showAuth, setShowAuth] = useState(false);
 
     useEffect(() => {
         // Fetch current session right away
@@ -49,15 +51,18 @@ function App() {
     }
 
     if (!session) {
-        return (
-            <UnifiedLogin 
-                initialRole={authType} 
+        return showAuth ? (
+            <UnifiedLogin
+                initialRole={authType}
                 onLoginSuccess={(role) => {
                     setAuthType(role);
                     if (role === 'admin') setView('dashboard');
                     else setView('list');
-                }} 
+                }}
+                onBack={() => setShowAuth(false)}
             />
+        ) : (
+            <LandingPage onGetStarted={() => setShowAuth(true)} />
         );
     }
 
