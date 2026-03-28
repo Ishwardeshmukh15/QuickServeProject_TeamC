@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
     Search, MapPin, Zap, Droplets, PaintRoller, Wind, 
     CheckCircle2, Star, ShieldCheck, Clock, CreditCard, 
     HeadphonesIcon, ArrowRight 
 } from 'lucide-react';
+import { AboutUs, ProvidersInfo, Terms, Privacy, Contact } from './StaticPages';
 
 interface LandingPageProps {
     onGetStarted: () => void;
@@ -25,30 +26,20 @@ const FEATURES = [
     { title: '24/7 Support', desc: 'Our team is always here to help you around the clock.', icon: HeadphonesIcon },
 ];
 
-const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {    return (
-        <div className="min-h-screen bg-slate-50 dark:bg-slate-900 font-sans selection:bg-blue-500/30">
-            {/* Header / Nav */}
-            <nav className="fixed w-full z-50 transition-all duration-300 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200/50 dark:border-slate-800/50">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between items-center h-20">
-                        <div className="flex items-center gap-2">
-                            <div className="w-10 h-10 bg-blue-600 text-white rounded-xl flex items-center justify-center font-bold text-xl shadow-lg shadow-blue-500/30">
-                                Q
-                            </div>
-                            <span className="text-2xl font-black tracking-tight text-slate-900 dark:text-white">QuickServe</span>
-                        </div>
-                        <div className="flex items-center gap-4 text-sm font-semibold">
-                            <button onClick={onGetStarted} className="hidden sm:block text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                                Log in
-                            </button>
-                            <button onClick={onGetStarted} className="bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 px-5 py-2.5 rounded-full transition-all shadow-md shadow-slate-900/10 hover:shadow-lg dark:shadow-none hover:-translate-y-0.5">
-                                Sign up
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </nav>
+type Section = 'home' | 'about' | 'providers' | 'terms' | 'privacy' | 'contact';
 
+const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
+    const [currentSection, setCurrentSection] = useState<Section>('home');
+
+    const renderContent = () => {
+        switch (currentSection) {
+            case 'about': return <AboutUs />;
+            case 'providers': return <ProvidersInfo />;
+            case 'terms': return <Terms />;
+            case 'privacy': return <Privacy />;
+            case 'contact': return <Contact />;
+            default: return (
+                <>
             {/* Hero Section */}
             <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden px-4">
                 {/* Background Blobs */}
@@ -205,22 +196,55 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {    retur
                     </div>
                 </div>
             </section>
+                </>
+            );
+        }
+    };
+
+    return (
+        <div className="min-h-screen bg-slate-50 dark:bg-slate-900 font-sans selection:bg-blue-500/30 flex flex-col">
+            {/* Header / Nav */}
+            <nav className="fixed w-full z-50 transition-all duration-300 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200/50 dark:border-slate-800/50">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="flex justify-between items-center h-20">
+                        <div className="flex items-center gap-2 cursor-pointer" onClick={() => setCurrentSection('home')}>
+                            <div className="w-10 h-10 bg-blue-600 text-white rounded-xl flex items-center justify-center font-bold text-xl shadow-lg shadow-blue-500/30">
+                                Q
+                            </div>
+                            <span className="text-2xl font-black tracking-tight text-slate-900 dark:text-white">QuickServe</span>
+                        </div>
+                        <div className="flex items-center gap-4 text-sm font-semibold">
+                            <button onClick={onGetStarted} className="hidden sm:block text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                                Log in
+                            </button>
+                            <button onClick={onGetStarted} className="bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 px-5 py-2.5 rounded-full transition-all shadow-md shadow-slate-900/10 hover:shadow-lg dark:shadow-none hover:-translate-y-0.5">
+                                Sign up
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            {/* Main Content Area */}
+            <div className="flex-grow">
+                {renderContent()}
+            </div>
 
             {/* Footer */}
-            <footer className="bg-white dark:bg-slate-950 py-12 border-t border-slate-100 dark:border-slate-900">
+            <footer className="bg-white dark:bg-slate-950 py-12 border-t border-slate-100 dark:border-slate-900 mt-auto">
                 <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-6">
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 cursor-pointer" onClick={() => setCurrentSection('home')}>
                         <div className="w-8 h-8 bg-blue-600 text-white rounded-lg flex items-center justify-center font-bold shadow-md">
                             Q
                         </div>
                         <span className="text-xl font-black tracking-tight text-slate-900 dark:text-white">QuickServe</span>
                     </div>
                     <div className="flex flex-wrap justify-center gap-6 text-sm font-semibold text-slate-500">
-                        <a href="#" className="hover:text-blue-600 transition-colors">About Us</a>
-                        <a href="#" className="hover:text-blue-600 transition-colors">Providers</a>
-                        <a href="#" className="hover:text-blue-600 transition-colors">Terms</a>
-                        <a href="#" className="hover:text-blue-600 transition-colors">Privacy</a>
-                        <a href="#" className="hover:text-blue-600 transition-colors">Contact</a>
+                        <button onClick={() => setCurrentSection('about')} className="hover:text-blue-600 transition-colors">About Us</button>
+                        <button onClick={() => setCurrentSection('providers')} className="hover:text-blue-600 transition-colors">Providers</button>
+                        <button onClick={() => setCurrentSection('terms')} className="hover:text-blue-600 transition-colors">Terms</button>
+                        <button onClick={() => setCurrentSection('privacy')} className="hover:text-blue-600 transition-colors">Privacy</button>
+                        <button onClick={() => setCurrentSection('contact')} className="hover:text-blue-600 transition-colors">Contact</button>
                     </div>
                     <p className="text-slate-400 text-sm">© 2026 QuickServe. All rights reserved.</p>
                 </div>
