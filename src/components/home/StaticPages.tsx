@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Mail, Phone, MapPin, CheckCircle2 } from 'lucide-react';
 
 export const AboutUs = () => (
@@ -6,7 +6,7 @@ export const AboutUs = () => (
         <h1 className="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white mb-8">About QuickServe</h1>
         <div className="prose dark:prose-invert max-w-none text-lg leading-relaxed">
             <p className="mb-6">
-                QuickServe was founded with a simple mission: to connect people with reliable, top-quality local service professionals quickly and securely. 
+                QuickServe was founded with a simple mission: to connect people with reliable, top-quality local service professionals quickly and securely.
                 Whether you need a plumber, an electrician, a house cleaner, or a handyman, we make finding the right person for the job effortless.
             </p>
             <p className="mb-6">
@@ -49,7 +49,7 @@ export const Terms = () => (
             <p>Last updated: March 2026</p>
             <h2 className="text-2xl font-bold text-slate-900 dark:text-white">1. Acceptance of Terms</h2>
             <p>By accessing or using QuickServe, you agree to be bound by these Terms of Service. If you disagree with any part of the terms, then you may not access the service.</p>
-            
+
             <h2 className="text-2xl font-bold text-slate-900 dark:text-white">2. User Accounts</h2>
             <p>You must create an account to use certain features. You are responsible for safeguarding your password and for all activities that occur under your account.</p>
 
@@ -67,7 +67,7 @@ export const Privacy = () => (
         <h1 className="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white mb-8">Privacy Policy</h1>
         <div className="prose dark:prose-invert max-w-none space-y-6">
             <p>Your privacy is important to us. This policy explains how we collect, use, and protect your information.</p>
-            
+
             <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Information We Collect</h2>
             <p>We collect information you provide directly to us, such as your name, email, phone number, address, and payment details when you register or book a service.</p>
 
@@ -80,65 +80,101 @@ export const Privacy = () => (
     </div>
 );
 
-export const Contact = () => (
-    <div className="pt-32 pb-20 px-4 max-w-4xl mx-auto text-slate-800 dark:text-slate-200">
-        <h1 className="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white mb-8">Contact Us</h1>
-        <p className="text-lg mb-10">Have questions or need help? Our support team is available 24/7.</p>
-        
-        <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700/50">
-                <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">Get in Touch</h2>
-                <div className="space-y-6">
-                    <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 bg-blue-50 dark:bg-blue-900/20 rounded-full flex items-center justify-center text-blue-600 dark:text-blue-400">
-                            <Mail className="w-5 h-5" />
+export const Contact = () => {
+    const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+
+        const text = encodeURIComponent(`*New Contact Message*\n\n*Name:* ${formData.name}\n*Email:* ${formData.email}\n\n*Message:*\n${formData.message}`);
+
+        window.open(`https://wa.me/919398238688?text=${text}`, '_blank');
+    };
+
+    return (
+        <div className="pt-32 pb-20 px-4 max-w-4xl mx-auto text-slate-800 dark:text-slate-200">
+            <h1 className="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white mb-8">Contact Us</h1>
+            <p className="text-lg mb-10">Have questions or need help? Our support team is available 24/7.</p>
+
+            <div className="grid md:grid-cols-2 gap-8">
+                <div className="bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700/50">
+                    <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">Get in Touch</h2>
+                    <div className="space-y-6">
+                        <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 bg-blue-50 dark:bg-blue-900/20 rounded-full flex items-center justify-center text-blue-600 dark:text-blue-400">
+                                <Mail className="w-5 h-5" />
+                            </div>
+                            <div>
+                                <p className="font-semibold text-slate-900 dark:text-white">Email</p>
+                                <p className="text-slate-500">support@quickserve.com</p>
+                            </div>
                         </div>
-                        <div>
-                            <p className="font-semibold text-slate-900 dark:text-white">Email</p>
-                            <p className="text-slate-500">support@quickserve.com</p>
+                        <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 bg-blue-50 dark:bg-blue-900/20 rounded-full flex items-center justify-center text-blue-600 dark:text-blue-400">
+                                <Phone className="w-5 h-5" />
+                            </div>
+                            <div>
+                                <p className="font-semibold text-slate-900 dark:text-white">Phone</p>
+                                <p className="text-slate-500">+1 (800) 123-4567</p>
+                            </div>
                         </div>
-                    </div>
-                    <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 bg-blue-50 dark:bg-blue-900/20 rounded-full flex items-center justify-center text-blue-600 dark:text-blue-400">
-                            <Phone className="w-5 h-5" />
-                        </div>
-                        <div>
-                            <p className="font-semibold text-slate-900 dark:text-white">Phone</p>
-                            <p className="text-slate-500">+1 (800) 123-4567</p>
-                        </div>
-                    </div>
-                    <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 bg-blue-50 dark:bg-blue-900/20 rounded-full flex items-center justify-center text-blue-600 dark:text-blue-400">
-                            <MapPin className="w-5 h-5" />
-                        </div>
-                        <div>
-                            <p className="font-semibold text-slate-900 dark:text-white">Office</p>
-                            <p className="text-slate-500">123 Service Blvd, San Francisco, CA</p>
+                        <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 bg-blue-50 dark:bg-blue-900/20 rounded-full flex items-center justify-center text-blue-600 dark:text-blue-400">
+                                <MapPin className="w-5 h-5" />
+                            </div>
+                            <div>
+                                <p className="font-semibold text-slate-900 dark:text-white">Office</p>
+                                <p className="text-slate-500">123 Service Blvd, San Francisco, CA</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            
-            <div className="bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700/50">
-                <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">Send a Message</h2>
-                <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
-                    <div>
-                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Name</label>
-                        <input type="text" className="w-full px-4 py-2 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow" placeholder="Your name" />
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Email</label>
-                        <input type="email" className="w-full px-4 py-2 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow" placeholder="your@email.com" />
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Message</label>
-                        <textarea rows={4} className="w-full px-4 py-2 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow resize-none" placeholder="How can we help?"></textarea>
-                    </div>
-                    <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl transition-colors mt-2">
-                        Send Message
-                    </button>
-                </form>
+
+                <div className="bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700/50">
+                    <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">Send a Message</h2>
+                    <form className="space-y-4" onSubmit={handleSubmit}>
+                        <div>
+                            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Name</label>
+                            <input
+                                type="text"
+                                required
+                                value={formData.name}
+                                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                className="w-full px-4 py-2 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow"
+                                placeholder="Your name"
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Email</label>
+                            <input
+                                type="email"
+                                required
+                                value={formData.email}
+                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                className="w-full px-4 py-2 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow"
+                                placeholder="your@email.com"
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Message</label>
+                            <textarea
+                                rows={4}
+                                required
+                                value={formData.message}
+                                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                                className="w-full px-4 py-2 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow resize-none"
+                                placeholder="How can we help?"
+                            ></textarea>
+                        </div>
+                        <button
+                            type="submit"
+                            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl transition-colors mt-2"
+                        >
+                            Send Message
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
-);
+    );
+};
